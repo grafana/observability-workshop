@@ -243,7 +243,7 @@ C. The logs ConfigMap will tell the logs agent how to behave. The `logs/logs-age
 The API key is the same one from the metrics lab. They do not need individual keys.
 
 D. Deploy the Logs agent configuration:
-	
+  
 ```shell
 kubectl apply -f logs/logs-agent-cm.yaml
 ```
@@ -251,7 +251,7 @@ kubectl apply -f logs/logs-agent-cm.yaml
 E. Restart the logs agent to pick up the values in the ConfigMap.
 
 ```shell
-	kubectl rollout restart daemonset/grafana-logs-agent -n grafana-logs-ns
+  kubectl rollout restart daemonset/grafana-logs-agent -n grafana-logs-ns
 ```
 
 F. Log into your Grafana dashboard instance and go to `Explore`. When you choose your logs data source, you should see several labels appear in the logs browser. If you only see `__name__`, try refreshing after a few minutes. If it is still just the `__name__` label, you will need to troubleshoot your deployment. Use k9s to view logs or speak to your instructor.
