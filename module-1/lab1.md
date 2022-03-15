@@ -17,7 +17,7 @@ https://wetty-<workshopName>.work-shop.grafana.net
 B. For this workshop, we are all working in our own Kubernetes clusters. At the root of your home directory, you will find a file called `kubeconfig`. Set an OS environment variable `KUBECONFIG` to point to this file. IMPORTANT: If you log out and log back in, you will need to repeast this step.
 
 ```shell
-export KUBECONFIG=/home/<myusername>/kubeconfig
+export KUBECONFIG=$HOME/kubeconfig
 ```
 
 C. Validate that you can see the context in your list:
@@ -109,7 +109,7 @@ E. The first check we will set up is a DNS check. Click on `New Check`
 
 
 F. Fill in values:
-    - Choose DNS as the check type
+    - Choose `DNS` as the check type
     - For `Job Name`, enter `dnsCheck`
     - For `Target` enter the domain name for your sockshop front end application. This looks like `<myname>.work-shop.grafana.net`.
     - Under `Probe Locations` choose `All` to populate the locations box.
@@ -169,10 +169,10 @@ kubectl get deployments
 
 Now that we've done black box monitoring, we want to set up white box monitoring. To do this, we will install the Grafana Agent and configure it for metrics collection.
 
-A. In your home folder in the web terminal, use `nano` or `vi` to open `metrics/metrics-agent-deploy.yaml`. If you are not familiar with either `nano` or `vi`, use `nano`. This will create a Namespace, Deployment, Service Account, ClusterRole and ClusterRoleBinding. You do not need to edit this file, just review what it is doing.
+A. In your home folder in the web terminal, use `nano` or `vi` or `more` to open `metrics/metrics-agent-deploy.yaml`. If you are not familiar with either `nano` or `vi`, use `more`. This will create a Namespace, Deployment, Service Account, ClusterRole and ClusterRoleBinding. You do not need to edit this file, just review what it is doing.
 
 ```
-nano metrics/metrics-agent-deploy.yaml
+more metrics/metrics-agent-deploy.yaml
 ```
 
 B. Deploy the metrics agent:
@@ -187,7 +187,7 @@ C. View that the agent is starting in k9s. If you do not see namespaces other th
 k9s
 ```
 
-D. Open `metrics/metrics-agent-cm.yaml` with `nano` or `vi`. Before the workshop, an API key was already created in your Grafana Cloud instance to be used for sending telemetry. This file has been filled in already with the appropriate credentials prior to the workshop for your Grafana Cloud instance, specifically:
+D. Open `metrics/metrics-agent-cm.yaml` with `nano` or `vi` or `more`. Before the workshop, an API key was already created in your Grafana Cloud instance to be used for sending telemetry. This file has been filled in already with the appropriate credentials prior to the workshop for your Grafana Cloud instance, specifically:
 
     |Line no|Cloud Setting|ConfigMap Setting|
     |--|--|--|
@@ -251,7 +251,7 @@ kubectl apply -f logs/logs-agent-cm.yaml
 E. Restart the logs agent to pick up the values in the ConfigMap.
 
 ```shell
-  kubectl rollout restart daemonset/grafana-logs-agent -n grafana-logs-ns
+kubectl rollout restart daemonset/grafana-logs-agent -n grafana-logs-ns
 ```
 
 F. Log into your Grafana dashboard instance and go to `Explore`. When you choose your logs data source, you should see several labels appear in the logs browser. If you only see `__name__`, try refreshing after a few minutes. If it is still just the `__name__` label, you will need to troubleshoot your deployment. Use k9s to view logs or speak to your instructor.
@@ -349,8 +349,8 @@ C. At the bottom, choose the logs and metrics data sources for your stack.
 
 ![import3](image32.png)
 
-D. Finally, load the dashboard, and choose your namespace from the dropdown. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
+D. Finally, load the dashboard. You should see the dashboard populate with data from your logs and metrics data sources. If no errors have occured yet with orders, that panel may be empty.
 
-![import4](image33.png)
+![import4](iamge33.png)
 
 
